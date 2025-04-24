@@ -20,12 +20,24 @@ git clone https://github.com/JPBeguerisse/projet-portfolio-airtable.git
 cd projet-portfolio-airtable
 ```
 
-2. Installer les dépendances :
+2. Installer les dépendances admin :
 
 ```bash
 cd admin
 npm install
 npm run dev
+
+```
+
+---
+
+3. Installer les dépendances portfolio :
+
+```bash
+cd portfolio
+npm install
+npm run dev
+
 ```
 
 ---
@@ -77,5 +89,3 @@ VITE_AIRTABLE_BASE_ID=BASE_ID
 - Jean Pierre BEGUERISSE
 - Ilyesse HAMCHERIF
 ```
-
----
