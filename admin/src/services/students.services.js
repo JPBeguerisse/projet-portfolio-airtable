@@ -1,4 +1,4 @@
-import { airtable } from "./airtable";
+import { airtable } from "./projects.service";
 
 export const fetchAllStudents = async () => {
   const res = await airtable.get("/students");

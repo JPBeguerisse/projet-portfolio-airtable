@@ -1,13 +1,15 @@
-import {AdminLayout} from "../components/AdminLayout";
+import {AdminLayout} from "../../components/AdminLayout";
 import { useForm } from "react-hook-form";
 import { zodResolver } from "@hookform/resolvers/zod";
 import { z } from "zod";
 import { useEffect, useState } from "react";
-import { CATEGORY_OPTIONS, createProject, TECHNO_OPTIONS } from "../services/airtable";
-import { fetchAllStudents } from "../services/students.services";
+import { CATEGORY_OPTIONS, createProject, TECHNO_OPTIONS } from "../../services/projects.service";
+import { fetchAllStudents } from "../../services/students.services";
 import { useNavigate } from "react-router-dom";
-import { uploadToCloudinary } from "../utils/cloudinary";
+import { uploadToCloudinary } from "../../utils/cloudinary";
 import { toast } from "react-toastify";
+import Select from "react-select";
+
 
 const schema = z.object({
   name: z.string().min(1, "Le nom est requis"),
@@ -25,6 +27,16 @@ export const AddProject = () => {
   const navigate = useNavigate();
   const [studentsList, setStudentsList] = useState([]);
   const [previewImages, setPreviewImages] = useState([]);
+  const techOptions = TECHNO_OPTIONS.map((tech) => ({
+    label: tech,
+    value: tech,
+  }));
+  
+  const categoryOptions = CATEGORY_OPTIONS.map((cat) => ({
+    label: cat,
+    value: cat,
+  }));
+  
 
 
   const {
@@ -75,6 +87,17 @@ export const AddProject = () => {
   }, [selectedStudents]);
 
 
+  const handleRemoveImage = (index) => {
+    // Retirer du preview
+    setPreviewImages((prev) => prev.filter((_, i) => i !== index));
+  
+    // Retirer du form (React Hook Form)
+    const currentImages = watch("images") || [];
+    const newImages = currentImages.filter((_, i) => i !== index);
+    setValue("images", newImages);
+  };
+  
+
 
   return (
     <AdminLayout>
@@ -93,60 +116,40 @@ export const AddProject = () => {
         </div>
 
         <div>
-        <label className="font-semibold block">Technologies</label>
-            <div className="grid grid-cols-2 gap-2 mt-1">
-                {TECHNO_OPTIONS.map((tech) => (
-                <label key={tech} className="flex items-center gap-2">
-                    <input
-                    type="checkbox"
-                    value={tech}
-                    checked={watch("technologies").includes(tech)}
-                    onChange={(e) => {
-                        const value = e.target.value;
-                        const current = watch("technologies");
-                        setValue(
-                        "technologies",
-                        current.includes(value)
-                            ? current.filter((t) => t !== value)
-                            : [...current, value]
-                        );
-                    }}
-                    />
-                    {tech}
-                </label>
-                ))}
+            <div>
+                <label className="font-semibold block mb-1">Technologies</label>
+                <Select
+                    isMulti
+                    options={techOptions}
+                    onChange={(selected) =>
+                    setValue("technologies", selected.map((s) => s.value))
+                    }
+                    className="text-sm"
+                />
+                {errors.technologies && (
+                    <p className="text-red-500">{errors.technologies.message}</p>
+                )}
             </div>
-        {errors.technologies && (
-            <p className="text-red-500">{errors.technologies.message}</p>
-        )}
         </div>
 
         <div>
-          <label className="font-semibold block">Étudiants</label>
-          <div className="grid grid-cols-2 gap-2 mt-1">
-            {studentsList.map((student) => (
-              <label key={student.id} className="flex items-center gap-2">
-                <input
-                  type="checkbox"
-                  value={student.airtableId}
-                  checked={selectedStudents.includes(student.airtableId)}
-                  onChange={(e) => {
-                    const value = e.target.value;
-                    setValue(
-                      "students",
-                      selectedStudents.includes(value)
-                        ? selectedStudents.filter((s) => s !== value)
-                        : [...selectedStudents, value]
-                    );
-                  }}
-                />
-                {student.firstName} {student.lastName}
-              </label>
-            ))}
-          </div>
-          {errors.students && (
-            <p className="text-red-500">{errors.students.message}</p>
-          )}
+        <div>
+            <label className="font-semibold block mb-1">Étudiants</label>
+            <Select
+                isMulti
+                options={studentsList.map((student) => ({
+                label: `${student.firstName} ${student.lastName}`,
+                value: student.airtableId,
+                }))}
+                onChange={(selected) =>
+                setValue("students", selected.map((s) => s.value))
+                }
+                className="text-sm"
+            />
+            {errors.students && (
+                <p className="text-red-500">{errors.students.message}</p>
+            )}
+            </div>
         </div>
 
         <div>
@@ -171,17 +174,17 @@ export const AddProject = () => {
         </div>
 
         <div>
-            <label className="block font-semibold">Catégorie</label>
-            <select {...register("category")} className="border w-full p-2">
-                <option value="">-- Choisir une catégorie --</option>
-                {CATEGORY_OPTIONS.map((cat) => (
-                <option key={cat} value={cat}>{cat}</option>
-                ))}
-            </select>
+            <label className="font-semibold block mb-1">Catégorie</label>
+            <Select
+                options={categoryOptions}
+                onChange={(selected) => setValue("category", selected.value)}
+                className="text-sm"
+            />
             {errors.category && (
                 <p className="text-red-500">{errors.category.message}</p>
             )}
         </div>
+
 
         <div>
         <label className="block font-semibold">Images du projet</label>
@@ -216,7 +219,14 @@ export const AddProject = () => {
         {previewImages.length > 0 && (
         <div className="grid grid-cols-2 gap-4 mt-2">
             {previewImages.map((img, index) => (
-            <div key={index} className="border p-2 rounded shadow">
+            <div key={index} className="relative border p-2 rounded shadow">
+                <button
+                type="button"
+                onClick={() => handleRemoveImage(index)}
+                className="absolute top-1 cursor-pointer right-1  text-white px-2 py-1 rounded-full text-xs"
+                >
+                ❌
+                </button>
                 <img
                 src={img.previewUrl}
                 alt={img.name}
@@ -227,6 +237,7 @@ export const AddProject = () => {
             ))}
         </div>
         )}
+
  
         </div>
 

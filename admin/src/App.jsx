@@ -1,11 +1,13 @@
 import { BrowserRouter, Routes, Route, Navigate } from "react-router-dom";
 import Login from "./pages/Login";
 import {Dashboard }from "./pages/Dashboard";
-import {Projects} from "./pages/Projects";
-import {AddProject }from "./pages/AddProject";
+import {Projects} from "./pages/projects/Projects";
+import {AddProject }from "./pages/projects/AddProject";
 import {AddStudent} from "./pages/students/AddStudent";
+import { EditProject } from "./pages/projects/EditProject";
 import { Students } from "./pages/students/Students";
 import { EditStudent } from "./pages/students/EditStudent";
+import { ProjectDetail } from "./pages/projects/ProjectDetail";
 
 function ProtectedRoute({ children }) {
   const isLoggedIn = !!localStorage.getItem("admin");
@@ -40,7 +42,19 @@ function App() {
               <AddProject />
             </ProtectedRoute>
           }
-          />
+        />
+
+        <Route
+          path="/projects/:id"
+          element={
+            <ProtectedRoute>
+              <EditProject />
+            </ProtectedRoute>
+          }
+        />
+
+<Route path="/projects/:id/detail" element={<ProjectDetail />} />
+
 
         <Route
           path="/students"

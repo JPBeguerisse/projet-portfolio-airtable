@@ -1,7 +1,6 @@
 import { useEffect, useState } from "react";
-import { fetchAllProjects, updateProjectVisibility } from "../services/airtable";
-import { Link } from "react-router-dom";
-import {AdminLayout} from "../components/AdminLayout";
+import { fetchAllProjects, updateProjectVisibility, deleteProject } from "../../services/projects.service";
+import {AdminLayout} from "../../components/AdminLayout";
 import { useNavigate } from "react-router-dom";
 
 export const Projects = () => {
@@ -19,6 +18,17 @@ export const Projects = () => {
     );
   };
 
+  const handleDelete = async (id) => {
+    if (!window.confirm("Supprimer ce projet ?")) return;
+    try {
+      await deleteProject(id);
+      setProjects((prev) => prev.filter((p) => p.airtableId !== id));
+      toast.success("Projet supprimé avec succès !");
+    } catch (err) {
+      toast.error("Erreur lors de la suppression.");
+      console.error(err);
+    }
+  }
 
 
   return (
@@ -43,12 +53,13 @@ export const Projects = () => {
               </p>
             </div>
             <div className="flex gap-2">
-              <Link
-                to={`/projects/${project.id}`}
-                className="bg-blue-500 text-white px-3 py-1 rounded"
-              >
+              <button onClick={() => navigate(`/projects/${project.airtableId}/detail`)} className="bg-green-500 text-white px-3 py-1 rounded">
+                Détails
+              </button>
+              <button className="bg-blue-500 text-white px-3 py-1 rounded" onClick={() => navigate(`/projects/${project.airtableId}`)}>
                 Modifier
-              </Link>
+              </button>
+            
               <button
                 onClick={() => handleToggleVisibility(project)}
                 className={`px-3 py-1 rounded ${
@@ -56,6 +67,12 @@ export const Projects = () => {
                 } text-white`}
               >
                 {project.visible ? "Masquer" : "Afficher"}
+              </button>
+              <button
+                onClick={() => handleDelete(project.airtableId)}
+                className="bg-red-500 text-white px-3 py-1 rounded"
+              >
+                Supprimer
               </button>
             </div>
           </div>

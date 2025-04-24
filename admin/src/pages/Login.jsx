@@ -1,7 +1,7 @@
 import { useState } from "react";
 import { useNavigate } from "react-router-dom";
 import { sha256 } from "js-sha256";
-import { fetchUsers } from "../services/airtable";
+import { fetchUsers } from "../services/projects.service";
 
 export default function Login() {
   const [email, setEmail] = useState("");

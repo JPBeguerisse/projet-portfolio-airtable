@@ -64,6 +64,24 @@ export const createProject = async (fields) => {
   };
 };
 
+export const fetchProjectById = async (id) => {
+  const res = await airtable.get(`/projects/${id}`);
+  return {
+    airtable: res.data.id,
+    ...res.data.fields,
+  };
+};
+
+export const updateProject = async (id, fields) => {
+  const res = await airtable.patch(`/projects/${id}`, {
+    fields,
+  });
+  return {
+    id: res.data.id,
+    ...res.data.fields,
+  };
+};
+
 export const updateProjectVisibility = async (id, visible) => {
   const res = await airtable.patch(`/projects/${id}`, {
     fields: { visible },
@@ -72,6 +90,11 @@ export const updateProjectVisibility = async (id, visible) => {
     id: res.data.id,
     ...res.data.fields,
   };
+};
+
+export const deleteProject = async (id) => {
+  const res = await airtable.delete(`/projects/${id}`);
+  return res.status === 200;
 };
 
 export const TECHNO_OPTIONS = ["React", "Node.js", "Tailwind CSS", "MongoDB"];
