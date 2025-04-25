@@ -16,14 +16,15 @@ export default function Login() {
     // );
 
     const user = users.find(
-        u => u.email === email &&
-             u.password === sha256(password) &&
-             u.role === "admin"
-      );
+      (u) =>
+        u.email === email &&
+        u.password === sha256(password) &&
+        u.role === "admin"
+    );
 
     if (user) {
-        localStorage.setItem("admin", user.id);
-        navigate("/dashboard");
+      localStorage.setItem("admin", user.id);
+      navigate("/dashboard");
     } else {
       setError("Identifiants incorrects");
     }
@@ -36,18 +37,18 @@ export default function Login() {
         className="border w-full p-2 mb-2"
         placeholder="Email"
         value={email}
-        onChange={e => setEmail(e.target.value)}
+        onChange={(e) => setEmail(e.target.value)}
       />
       <input
         type="password"
         className="border w-full p-2 mb-2"
         placeholder="Mot de passe"
         value={password}
-        onChange={e => setPassword(e.target.value)}
+        onChange={(e) => setPassword(e.target.value)}
       />
       {error && <p className="text-red-500 text-sm">{error}</p>}
       <button
-        className="bg-blue-500 text-white px-4 py-2 mt-2"
+        className="bg-gray-800 text-white px-4 py-2 mt-2"
         onClick={handleLogin}
       >
         Se connecter

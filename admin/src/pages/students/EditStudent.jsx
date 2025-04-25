@@ -1,12 +1,14 @@
 import { useEffect, useState } from "react";
 import { useParams, useNavigate } from "react-router-dom";
-import { fetchStudentById, updateStudent } from "../../services/students.services";
-import {AdminLayout} from "../../components/AdminLayout";
+import {
+  fetchStudentById,
+  updateStudent,
+} from "../../services/students.services";
+import { AdminLayout } from "../../components/AdminLayout";
 import { useForm } from "react-hook-form";
 import { z } from "zod";
 import { zodResolver } from "@hookform/resolvers/zod";
 import { toast } from "react-toastify";
-
 
 export const studentSchema = z.object({
   firstName: z.string().min(1, "Le prénom est requis"),
@@ -15,7 +17,7 @@ export const studentSchema = z.object({
 });
 
 export const EditStudent = () => {
-  const { id } = useParams(); 
+  const { id } = useParams();
   const navigate = useNavigate();
   const [loading, setLoading] = useState(true);
   console.log("ID:", id);
@@ -40,9 +42,9 @@ export const EditStudent = () => {
 
   const onSubmit = async (data) => {
     try {
-    await updateStudent(id, data);
-    toast.success("Étudiant mis à jour avec succès !");
-    navigate("/students");
+      await updateStudent(id, data);
+      toast.success("Étudiant mis à jour avec succès !");
+      navigate("/students");
     } catch (error) {
       toast.error("Erreur lors de la mise à jour de l'étudiant.");
       console.error(error);
@@ -79,11 +81,13 @@ export const EditStudent = () => {
           )}
         </div>
 
-        <button type="submit" className="bg-blue-600 text-white px-4 py-2 rounded">
+        <button
+          type="submit"
+          className="bg-gray-800 text-white px-4 py-2 rounded"
+        >
           Enregistrer les modifications
         </button>
       </form>
     </AdminLayout>
   );
 };
-

@@ -9,7 +9,24 @@ export const fetchCommentsByProject = async (projectId) => {
   });
 
   return res.data.records.map((record) => ({
-    id: record.id,
+    airtableId: record.id,
     ...record.fields,
   }));
+};
+
+export const createComment = async ({ content, projectId, user }) => {
+  const res = await airtable.post("/comments", {
+    fields: {
+      content,
+      Projet: [projectId],
+      user,
+    },
+  });
+
+  return res.data;
+};
+
+export const deleteComment = async (id) => {
+  const res = await airtable.delete(`/comments/${id}`);
+  return res.status === 200;
 };

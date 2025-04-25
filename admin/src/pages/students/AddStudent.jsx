@@ -1,5 +1,5 @@
 import { useNavigate } from "react-router-dom";
-import {AdminLayout} from "../../components/AdminLayout";
+import { AdminLayout } from "../../components/AdminLayout";
 import { createStudent } from "../../services/students.services";
 import { useForm } from "react-hook-form";
 import { zodResolver } from "@hookform/resolvers/zod";
@@ -71,7 +71,7 @@ export const AddStudent = () => {
 
         <button
           type="submit"
-          className="bg-green-600 text-white px-4 py-2 rounded"
+          className="bg-gray-800 hover:bg-black text-white px-4 py-2 rounded"
         >
           Ajouter l'étudiant
         </button>
@@ -79,4 +79,3 @@ export const AddStudent = () => {
     </AdminLayout>
   );
 };
-
