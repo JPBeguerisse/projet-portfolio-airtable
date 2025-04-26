@@ -49,8 +49,9 @@ export const fetchUsers = async () => {
 export const fetchAllProjects = async () => {
   const res = await airtable.get(getTableUrl("projects"));
   return res.data.records.map((record) => ({
-    airtableId: record.id, // <-- ID pour les PATCH
-    ...record.fields, // <-- champs de ta table
+    airtableId: record.id,
+    createdAt: record.createdTime,
+    ...record.fields,
   }));
 };
 

@@ -20,7 +20,6 @@ export const EditStudent = () => {
   const { id } = useParams();
   const navigate = useNavigate();
   const [loading, setLoading] = useState(true);
-  console.log("ID:", id);
 
   const {
     register,
@@ -51,43 +50,56 @@ export const EditStudent = () => {
     }
   };
 
-  if (loading) return <p className="p-6">Chargement...</p>;
-
   return (
     <AdminLayout>
-      <h2 className="text-2xl font-bold mb-4">Modifier un étudiant</h2>
-      <form onSubmit={handleSubmit(onSubmit)} className="space-y-4 max-w-xl">
+      {loading ? (
+        <p className="p-6">Chargement...</p>
+      ) : (
         <div>
-          <label className="block font-semibold">Prénom</label>
-          <input {...register("firstName")} className="border w-full p-2" />
-          {errors.firstName && (
-            <p className="text-red-500 text-sm">{errors.firstName.message}</p>
-          )}
-        </div>
+          <h2 className="text-2xl font-bold mb-4">Modifier un étudiant</h2>
+          <form
+            onSubmit={handleSubmit(onSubmit)}
+            className="space-y-4 max-w-xl"
+          >
+            <div>
+              <label className="block font-semibold">Prénom</label>
+              <input {...register("firstName")} className="border w-full p-2" />
+              {errors.firstName && (
+                <p className="text-red-500 text-sm">
+                  {errors.firstName.message}
+                </p>
+              )}
+            </div>
 
-        <div>
-          <label className="block font-semibold">Nom</label>
-          <input {...register("lastName")} className="border w-full p-2" />
-          {errors.lastName && (
-            <p className="text-red-500 text-sm">{errors.lastName.message}</p>
-          )}
-        </div>
+            <div>
+              <label className="block font-semibold">Nom</label>
+              <input {...register("lastName")} className="border w-full p-2" />
+              {errors.lastName && (
+                <p className="text-red-500 text-sm">
+                  {errors.lastName.message}
+                </p>
+              )}
+            </div>
 
-        <div>
-          <label className="block font-semibold">Promotion</label>
-          <input {...register("promotion")} className="border w-full p-2" />
-          {errors.promotion && (
-            <p className="text-red-500 text-sm">{errors.promotion.message}</p>
-          )}
-        </div>
+            <div>
+              <label className="block font-semibold">Promotion</label>
+              <input {...register("promotion")} className="border w-full p-2" />
+              {errors.promotion && (
+                <p className="text-red-500 text-sm">
+                  {errors.promotion.message}
+                </p>
+              )}
+            </div>
 
-        <button
-          type="submit"
-          className="bg-gray-800 text-white px-4 py-2 rounded"
-        >
-          Enregistrer les modifications
-        </button>
-      </form>
+            <button
+              type="submit"
+              className="bg-gray-800 text-white px-4 py-2 rounded"
+            >
+              Enregistrer les modifications
+            </button>
+          </form>
+        </div>
+      )}
     </AdminLayout>
   );
 };
