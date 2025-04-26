@@ -38,7 +38,7 @@ export const Sidebar = () => {
         <button
           onClick={() => {
             localStorage.removeItem("admin");
-            window.location.href = "/login";
+            window.location.href = "/";
           }}
           className="flex px-4 py-2 rounded w-full hover:bg-gray-800 hover:text-white  gap-4"
         >

@@ -1,9 +1,9 @@
 import { BrowserRouter, Routes, Route, Navigate } from "react-router-dom";
 import Login from "./pages/Login";
-import {Dashboard }from "./pages/Dashboard";
-import {Projects} from "./pages/projects/Projects";
-import {AddProject }from "./pages/projects/AddProject";
-import {AddStudent} from "./pages/students/AddStudent";
+import { Dashboard } from "./pages/Dashboard";
+import { Projects } from "./pages/projects/Projects";
+import { AddProject } from "./pages/projects/AddProject";
+import { AddStudent } from "./pages/students/AddStudent";
 import { EditProject } from "./pages/projects/EditProject";
 import { Students } from "./pages/students/Students";
 import { EditStudent } from "./pages/students/EditStudent";
@@ -18,7 +18,7 @@ function App() {
   return (
     <BrowserRouter>
       <Routes>
-        <Route path="/login" element={<Login />} />
+        <Route path="/" element={<Login />} />
         <Route
           path="/dashboard"
           element={
@@ -53,8 +53,7 @@ function App() {
           }
         />
 
-<Route path="/projects/:id/detail" element={<ProjectDetail />} />
-
+        <Route path="/projects/:id/detail" element={<ProjectDetail />} />
 
         <Route
           path="/students"
@@ -65,14 +64,13 @@ function App() {
           }
         />
 
-
-        <Route 
-          path="/students/add" 
+        <Route
+          path="/students/add"
           element={
-          <ProtectedRoute>
-            <AddStudent />
-          </ProtectedRoute>
-        } 
+            <ProtectedRoute>
+              <AddStudent />
+            </ProtectedRoute>
+          }
         />
 
         <Route
