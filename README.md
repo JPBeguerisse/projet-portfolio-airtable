@@ -78,10 +78,12 @@ VITE_AIRTABLE_BASE_ID=BASE_ID
 
 ---
 
-## 📅 Date de rendu
+## compte test admin
 
-🗓️ **27 avril 2025 à 23h59**
+email: test@mail.com 
+password: test
 
+---
 ---
 
 ## 👥 Membres du groupe
