@@ -10,7 +10,7 @@ function App() {
     <>
       <HeaderNav />
       <Router>
-        <div className="min-h-screen w-full bg-gray-100">
+        <div className="min-h-screen w-full bg-gray-100 pt-16">
           <Routes>
             <Route path="/" element={<Home />} />
             <Route path="/projects" element={<Projects />} />
