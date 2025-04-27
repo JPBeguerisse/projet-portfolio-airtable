@@ -4,6 +4,7 @@ import {
   FolderOpenDot,
   GraduationCap,
   LogOut,
+  Users,
 } from "lucide-react";
 
 export const Sidebar = () => {
@@ -30,6 +31,10 @@ export const Sidebar = () => {
           <Link to="/students" className={linkClass("/students")}>
             <GraduationCap />
             Étudiants
+          </Link>
+          <Link to="/users" className={linkClass("/users")}>
+            <Users />
+            Utilisateurs
           </Link>
         </nav>
       </div>
