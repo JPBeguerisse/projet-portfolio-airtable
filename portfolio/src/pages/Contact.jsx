@@ -1,25 +1,38 @@
 import { BuildingOffice2Icon, PhoneIcon, EnvelopeIcon } from "@heroicons/react/24/outline";
-import HeaderNav from "../components/HeaderNav";
 import { useState } from "react";
+import { createContact } from "../services/contacts.services";
 
 export default function Contact() {
     const [form, setForm] = useState({ name: "", email: "", message: "" });
-    const handleChange = (e) => setForm({ ...form, [e.target.name]: e.target.value });
-    const handleSubmit = (e) => {
+    const [loading, setLoading] = useState(false);
+    const [feedback, setFeedback] = useState("");
+
+    const handleChange = (e) =>
+        setForm({ ...form, [e.target.name]: e.target.value });
+
+    const handleSubmit = async (e) => {
         e.preventDefault();
-        alert("Merci, votre message a été envoyé !");
-        setForm({ name: "", email: "", message: "" });
+        setLoading(true);
+        setFeedback("");
+        try {
+            await createContact(form);
+            setFeedback("Merci, votre message a bien été envoyé !");
+            setForm({ name: "", email: "", message: "" });
+        } catch (err) {
+            console.error(err);
+            setFeedback("Une erreur est survenue. Réessayez plus tard.");
+        } finally {
+            setLoading(false);
+        }
     };
 
     return (
         <div className="bg-white min-h-screen">
-            <HeaderNav />
-            <main className="pt-24 px-6 max-w-4xl mx-auto grid gap-16 lg:grid-cols-2">
-                {/* Infos */}
+            <div className="pt-24 px-6 max-w-4xl mx-auto grid gap-16 lg:grid-cols-2">
                 <section className="space-y-6">
                     <h2 className="text-4xl font-semibold text-gray-900">Contactez-nous</h2>
                     <p className="text-gray-600">
-                        Vous avez une question sur un projet ou souhaitez nous rejoindre? Écrivez-nous.
+                        Vous avez une question sur un projet ou souhaitez nous rejoindre ? Écrivez-nous.
                     </p>
                     <dl className="space-y-4 text-gray-600">
                         <div className="flex items-start gap-4">
@@ -37,14 +50,16 @@ export default function Contact() {
                         <div className="flex items-start gap-4">
                             <EnvelopeIcon className="h-6 w-6 text-gray-400" />
                             <p>
-                                <a href="mailto:contact@esgi-portfolio.com" className="hover:text-gray-900">
+                                <a
+                                    href="mailto:contact@esgi-portfolio.com"
+                                    className="hover:text-gray-900"
+                                >
                                     contact@esgi-portfolio.com
                                 </a>
                             </p>
                         </div>
                     </dl>
                 </section>
-                {/* Formulaire */}
                 <section>
                     <form onSubmit={handleSubmit} className="space-y-6">
                         <div>
@@ -55,7 +70,8 @@ export default function Contact() {
                                 value={form.name}
                                 onChange={handleChange}
                                 required
-                                className="w-full border rounded px-3 py-2"
+                                className="w-full border rounded px-3 py-2 bg-white text-black"
+                                disabled={loading}
                             />
                         </div>
                         <div>
@@ -66,7 +82,8 @@ export default function Contact() {
                                 value={form.email}
                                 onChange={handleChange}
                                 required
-                                className="w-full border rounded px-3 py-2"
+                                className="w-full border rounded px-3 py-2 bg-white text-black"
+                                disabled={loading}
                             />
                         </div>
                         <div>
@@ -77,18 +94,23 @@ export default function Contact() {
                                 onChange={handleChange}
                                 required
                                 rows={5}
-                                className="w-full border rounded px-3 py-2"
+                                className="w-full border rounded px-3 py-2 bg-white text-black"
+                                disabled={loading}
                             />
                         </div>
                         <button
                             type="submit"
                             className="inline-block bg-indigo-600 text-white px-6 py-3 rounded hover:bg-indigo-500 transition"
+                            disabled={loading}
                         >
-                            Envoyer
+                            {loading ? "Envoi..." : "Envoyer"}
                         </button>
                     </form>
+                    {feedback && (
+                        <p className="mt-4 text-center text-gray-700">{feedback}</p>
+                    )}
                 </section>
-            </main>
+            </div>
         </div>
     );
 }
