@@ -2,11 +2,14 @@
 
 Ce projet permet de créer un portfolio pour présenter les projets étudiants de la filière Ingénierie du Web, avec une interface publique et une interface administrateur.
 
+- **Interface publique** pour la consultation des projets publiés
+- **Interface administrateur** pour la gestion du contenu
+
 ---
 
 ## 📁 Structure du projet
 
-- `admin/` – Interface d’administration (ajout, modification, suppression de projets, étudiants, statistiques, etc.)
+- `admin/` – Interface d’administration (ajout, modification, commenter, suppression de projets, étudiants, statistiques, etc.)
 - `portfolio/` – Interface publique pour consulter les projets publiés
 
 ---
@@ -17,6 +20,7 @@ Ce projet permet de créer un portfolio pour présenter les projets étudiants d
 
 ```bash
 git clone https://github.com/JPBeguerisse/projet-portfolio-airtable.git
+
 cd projet-portfolio-airtable
 ```
 
@@ -27,6 +31,8 @@ cd projet-portfolio-airtable
 cd admin
 npm install
 npm run dev
+
+lancer sur:  http://localhost:5174
 
 
 ```
@@ -39,6 +45,9 @@ npm run dev
 cd portfolio
 npm install
 npm run dev
+
+lancer sur:  http://localhost:5173
+
 ```
 
 ---
@@ -56,14 +65,15 @@ VITE_AIRTABLE_BASE_ID=BASE_ID
 
 ## 👨‍💻 Fonctionnalités principales
 
-- Ajout / modification / suppression de projets
-- Ajout d’étudiants liés aux projets
-- Téléversement d’images via Cloudinary
-- Statistiques (nombre de projets, likes, etc.)
-- Système de like
-- Authentification administrateur
-- Recherches par mot-clé
-- Interface publique pour visualiser les projets
+Création / modification / suppression de projets
+Commneter un project
+Ajout d'étudiants liés à des projets
+Téléversement d'images via Cloudinary
+Statistiques générales (nombre de projets, total de likes)
+Système de like sur les projets
+Authentification sécurisée pour l'admin
+Recherches de projets par mots-clés
+Interface publique pour visualiser uniquement les projets visibles
 
 ---
 
