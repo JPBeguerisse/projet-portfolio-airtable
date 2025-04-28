@@ -32,7 +32,7 @@ function App() {
       {/* <Navbar /> */}
       <BrowserRouter>
         <Routes>
-          <Route path="/" element={<Home />} />
+          <Route path="/" element={<Login />} />
           <Route path="/auth/login" element={<Login />} />
           <Route path="/auth/register" element={<Register />} />
           <Route path="/auth/confirm" element={<Confirm />} />
