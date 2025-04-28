@@ -98,10 +98,25 @@ export const deleteProject = async (id) => {
   return res.status === 200;
 };
 
-export const TECHNO_OPTIONS = ["React", "Node.js", "Tailwind CSS", "MongoDB"];
+export const TECHNO_OPTIONS = [
+  "React",
+  "Node JS",
+  "Tailwind CSS",
+  "MongoDB",
+  "React Native",
+  "Angular",
+  "Express.js",
+  "PostgreSQL",
+  "Next.js",
+  "MySQL",
+  "Figma",
+];
 export const CATEGORY_OPTIONS = [
   "Développement Web",
   "Design UX",
   "Marketing",
   "Data",
+  "Web App",
+  "Web Application",
+  "Mobile App",
 ];

@@ -1,62 +1,75 @@
 import { useState } from "react";
+import { Link } from "react-router-dom";
 
 export default function HeaderNav() {
-    const [mobileOpen, setMobileOpen] = useState(false);
-    const navigation = [
-        { name: "Accueil", href: "/" },
-        { name: "Projets", href: "/projects" },
-        { name: "À propos", href: "/about" },
-        { name: "Contact", href: "/contact" },
-    ];
+  const [mobileOpen, setMobileOpen] = useState(false);
 
-    return (
-        <header className="navbar-container">
-            <div className="navbar-content">
-                <a href="/" className="navbar-logo-link">
-                    <img src="/logo.svg" alt="Portfolio ESGI" className="navbar-logo" />
-                </a>
+  const navigation = [
+    { name: "Accueil", href: "/" },
+    { name: "Projets", href: "/projects" },
+    { name: "À propos", href: "/about" },
+    { name: "Contact", href: "/contact" },
+  ];
 
-                <nav className="navbar-desktop">
-                    {navigation.map((item) => (
-                        <a key={item.name} href={item.href} className="navbar-link">
-                            {item.name}
-                        </a>
-                    ))}
-                    <a href="http://localhost:5173/auth/login" className="navbar-link navbar-admin">
-                        Espace Admin
-                    </a>
-                </nav>
+  return (
+    <header className="bg-white shadow-md">
+      <div className="max-w-7xl mx-auto flex items-center justify-between p-4">
+        {/* Logo */}
+        <Link to="/" className="flex items-center">
+          <img src="/logo.svg" alt="Portfolio ESGI" className="h-10" />
+        </Link>
 
-                <button
-                    className="navbar-burger"
-                    onClick={() => setMobileOpen(!mobileOpen)}
-                    aria-label="Toggle menu"
-                >
-                    {mobileOpen ? "✕" : "≡"}
-                </button>
-            </div>
+        {/* Desktop Navigation */}
+        <nav className="hidden md:flex space-x-6 items-center">
+          {navigation.map((item) => (
+            <Link
+              key={item.name}
+              to={item.href}
+              className="text-gray-700 hover:text-blue-600 font-medium"
+            >
+              {item.name}
+            </Link>
+          ))}
+          <a
+            href="http://localhost:5174/auth/login"
+            className="ml-4 text-white bg-blue-600 hover:bg-blue-700 px-4 py-2 rounded"
+          >
+            Espace Admin
+          </a>
+        </nav>
 
-            {mobileOpen && (
-                <nav className="navbar-mobile">
-                    {navigation.map((item) => (
-                        <a
-                            key={item.name}
-                            href={item.href}
-                            className="navbar-link"
-                            onClick={() => setMobileOpen(false)}
-                        >
-                            {item.name}
-                        </a>
-                    ))}
-                    <a
-                        href="http://localhost:5173/auth/login"
-                        className="navbar-link navbar-admin"
-                        onClick={() => setMobileOpen(false)}
-                    >
-                        Espace Admin
-                    </a>
-                </nav>
-            )}
-        </header>
-    );
+        {/* Burger Button */}
+        <button
+          className="md:hidden text-2xl"
+          onClick={() => setMobileOpen(!mobileOpen)}
+          aria-label="Toggle menu"
+        >
+          {mobileOpen ? "✕" : "≡"}
+        </button>
+      </div>
+
+      {/* Mobile Navigation */}
+      {mobileOpen && (
+        <nav className="md:hidden bg-white shadow-md p-4 flex flex-col space-y-4">
+          {navigation.map((item) => (
+            <Link
+              key={item.name}
+              to={item.href}
+              className="text-gray-700 hover:text-blue-600 font-medium"
+              onClick={() => setMobileOpen(false)}
+            >
+              {item.name}
+            </Link>
+          ))}
+          <a
+            href="http://localhost:5174/auth/login"
+            className="text-white bg-blue-600 hover:bg-blue-700 px-4 py-2 rounded text-center"
+            onClick={() => setMobileOpen(false)}
+          >
+            Espace Admin
+          </a>
+        </nav>
+      )}
+    </header>
+  );
 }
