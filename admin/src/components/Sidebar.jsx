@@ -5,6 +5,7 @@ import {
   GraduationCap,
   LogOut,
   Users,
+  MoveLeft,
 } from "lucide-react";
 
 export const Sidebar = () => {
@@ -35,6 +36,10 @@ export const Sidebar = () => {
           <Link to="/users" className={linkClass("/users")}>
             <Users />
             Utilisateurs
+          </Link>
+          <Link to="http://localhost:5173/" className={linkClass("/site")}>
+            <MoveLeft />
+            Retour au site
           </Link>
         </nav>
       </div>

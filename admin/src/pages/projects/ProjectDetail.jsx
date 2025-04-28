@@ -29,7 +29,6 @@ export const ProjectDetail = () => {
       const studentsList = await fetchAllStudents();
       const linkedComments = await fetchCommentsByProject(proj.id); // Airtable ID
 
-      // Rattache les infos étudiants
       const linkedStudents = studentsList.filter((s) =>
         proj.students?.includes(s.airtableId)
       );
@@ -83,8 +82,6 @@ export const ProjectDetail = () => {
       console.error(err);
     }
   };
-
-  // if (loading || !project) return <p className="p-4">Chargement...</p>;
 
   return (
     <AdminLayout>
@@ -216,7 +213,7 @@ export const ProjectDetail = () => {
               className="w-full border p-2 rounded"
               placeholder="Écrire un commentaire..."
             />
-            <button className="mt-2 bg-gray-800 text-white px-4 py-2 rounded">
+            <button className="cursor-pointer mt-2 bg-gray-800 text-white px-4 py-2 rounded">
               Commenter
             </button>
           </form>
